@@ -1,4 +1,4 @@
-import urllib.request,re
+import urllib.request,re,sys
 
 def decodeSite(site,metodo):
     texto = site.read().decode(metodo)
@@ -7,6 +7,10 @@ def decodeSite(site,metodo):
 def findPages(texto):
     try:
         for f in re.finditer(r'<a href="/', texto): # value to be researched
+            localizacao = (f.start(),f.end())
+            lista.append(localizacao)
+            
+        for f in re.finditer(r'<a href=\'/', texto): # value to be researched
             localizacao = (f.start(),f.end())
             lista.append(localizacao)
         
@@ -19,24 +23,33 @@ def findLink(lista):
         ini = lista[i][0] + 10
         localizacaoAspa = texto.find('"', ini)
         fim = localizacaoAspa
-        print(texto[ini:fim])
+        lista2.append((texto[ini:fim]))
+    for i in range(0,len(lista2),1):
+        print(lista2[i])
+    for i in range(0,len(lista2),1):
+       print(url+'/'+lista2[i])
+       
         
-def conectSite():
+
+def conectSite(url):
      
-    url = input(str('Exemplo: http://google.com.br \n Site: http://www.')) # target
+    
     try:
         print('Conectando...', )
-        site = urllib.request.urlopen('http://www.' + url)
+        site = urllib.request.urlopen(url)
+        
         return site
     except:
-        print("Site invalido ou indisponivel")
-        return conectSite()
-    
-       
-site = conectSite()
-metodo = input('exemplo: utf-8, latin-1, iso-8859-1 \n Metodo:')
+        pass
+        #print("Site invalido ou indisponivel")
+        #return conectSite()
+url = input(str('Exemplo: http://google.com.br \n Site: http://www.')) # targe  
+site = conectSite(url)
+metodo = 'utf-8' #input('exemplo: utf-8, latin-1, iso-8859-1 \n Metodo:')
 texto = decodeSite(site,metodo)
 lista = []
+lista2 = []
 findPages(texto)
-findLink(lista)
+tratado = findLink(lista)
+
 
