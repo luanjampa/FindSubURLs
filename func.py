@@ -1,14 +1,13 @@
 import urllib.request,re
 lista = [] #is used for save positions
 lista2 = [] # is used after lista for slice the code
-#values = [,"<a href='/"]
 def decodeSite(site,metodo):
     texto = site.read().decode(metodo)
     return findPages(texto)
 # this function is for find the value a href and to include one in list for one treatment
 def findPages(texto):
     try:
-        for f in re.finditer('<a href="/', texto):# value to be researched
+        for f in re.finditer('<a href="/|<a href=\'/',texto):# value to be researched
             localizacao = (f.start(),f.end())
             lista.append(localizacao)
         return findLink(lista,texto)
