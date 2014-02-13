@@ -1,5 +1,5 @@
 import func
-url = ("conviso.com.br") # target
+url = ("google.com.br") # target
 func.conectSite(url)
 eita = func.exibir()
 print(eita)
