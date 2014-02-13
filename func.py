@@ -8,7 +8,7 @@ def decodeSite(site,metodo):
 # this function is for find the value a href and to include one in list for one treatment
 def findPages(texto):
     try:
-        for f in re.finditer('<a href="/','abc', texto):# value to be researched
+        for f in re.finditer('<a href="/', texto):# value to be researched
             localizacao = (f.start(),f.end())
             lista.append(localizacao)
         return findLink(lista,texto)
