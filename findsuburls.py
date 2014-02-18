@@ -1,5 +1,8 @@
-import func
-url = ("google.com.br") # target
-func.conectSite(url)
-eita = func.exibir()
-print(eita)
+from func import Func
+site = 'http://www.google.com.br'
+metodo = 'utf-8'
+texto = None
+site = Func(site,metodo,texto)
+
+site.conectSite()
+print(site)
