@@ -1,45 +1,38 @@
 import urllib.request,re
-lista = [] #is used for save positions
-lista2 = [] # is used after lista for slice the code
-def decodeSite(site,metodo):
-    texto = site.read().decode(metodo)
-    return findPages(texto)
-# this function is for find the value a href and to include one in list for one treatment
-def findPages(texto):
-    try:
-        for f in re.finditer('<a href="/|<a href=\'/',texto):# value to be researched
-            localizacao = (f.start(),f.end())
-            lista.append(localizacao)
-        return findLink(lista,texto)
-    except:
+class Func:
+    def __init__(self,site,metodo,texto):
+        self.site = site
+        self.metodo = metodo
+        self.listaPosicao = []
+        self.listaNome = []
+        self.texto = texto
         
-        return False
-# here is the treatment for slice the link       
-def findLink(lista,texto):
-    for i in range(0,len(lista),1):
-        ini = lista[i][0] + 10
-        localizacaoAspa = texto.find('"', ini)
-        fim = localizacaoAspa
-        lista2.append((texto[ini:fim]))
-  #  for i in range(0,len(lista1),1):
-  #      lista2.append((url+'/'+lista[i]))
-
+    def __str__(self):
+        return('{0}'.format(self.listaNome))
+    
+    def conectSite(self):
+        try:
+            print("Conectando")
+            self.site = urllib.request.urlopen(self.site)
+            return self.decodeSite()
+        except:return False
         
-def conectSite(url):
-     
-    try:
-        print('Conectando...', )
-        site = urllib.request.urlopen('http://www.' + url)
-        return conectSite2(site)
-    except:
-       return False
-    
-def conectSite2(site):
-    
-    metodo = 'utf-8'#input('exemplo: utf-8, latin-1, iso-8859-1 \n Metodo:')
-    texto = decodeSite(site,metodo)
-    findLink(lista,texto)
+    def decodeSite(self):
+        self.texto = self.site.read().decode(self.metodo)
+        return self.findPosicao()
 
-def exibir():
     
-   return lista2
+    def findPosicao(self):
+        try:
+            for f in re.finditer('<a href="/',self.texto):
+                localizacao = (f.start(),f.end())
+                self.listaPosicao.append(localizacao)
+            return self.findLink()
+        except:return False
+                
+    def findLink(self):
+        for i in range(0,len(self.listaPosicao),1):
+            ini = self.listaPosicao[i][0] + 10
+            localizacaoAspa = self.texto.find('"', ini)
+            fim = localizacaoAspa
+            self.listaNome.append((self.texto[ini:fim]))
