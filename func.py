@@ -33,7 +33,7 @@ class Func:
         except:return None
                 
     def findLink(self):
-        for i in range(0,len(self.listaPosicao),1):2
+        for i in range(0,len(self.listaPosicao),1):
             ini = self.listaPosicao[i][0] + 9
             fim = self.texto.find('"', ini)
             link = (self.texto[ini:fim])
