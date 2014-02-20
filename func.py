@@ -26,7 +26,7 @@ class Func:
     
     def findPosicao(self):
         try:
-            for f in re.finditer('<a href="',self.texto):
+            for f in re.finditer('<a href="|<a href=\'',self.texto):
                 localizacao = (f.start(),f.end())
                 self.listaPosicao.append(localizacao)
             return self.findLink()
@@ -37,7 +37,7 @@ class Func:
             ini = self.listaPosicao[i][0] + 9
             fim = self.texto.find('"', ini)
             link = (self.texto[ini:fim])
-            if link not in self.listaNome and (('www' not in link )and ('http://' not in link) and ('https://' not in link) and ('mailto' not in link)) : # poderia ser usado um for pegando os valores da lista aqui mais ficaria um pouco mais lento já que é um for dentro de outro
+            if link not in self.listaNome and (('www' not in link )and ('http://' not in link) and ('https://' not in link) and ('mailto' not in link)) : # poderia ser usado um for pegando os valores da listaaqui mais ficaria um pouco mais lento já que é um for dentro de outro
                 #print(link)
                 self.listaNome.append(link)
         del self.listaPosicao[:]
