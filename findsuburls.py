@@ -1,8 +1,9 @@
 from func import Func
-site = 'http://www.google.com.br'
+url = 'http://www.insoonia.com'
 metodo = 'utf-8'
 texto = None
-site = Func(site,metodo,texto)
+cont = 0
+site = Func(url,metodo,texto,cont)
 
 site.conectSite()
 print(site)
